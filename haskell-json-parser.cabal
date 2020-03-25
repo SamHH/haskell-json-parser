@@ -1,0 +1,49 @@
+cabal-version: 2.4
+
+name:           haskell-json-parser
+version:        0.1.0.0
+build-type:     Simple
+extra-source-files:
+    README.md
+
+common common-options
+    default-language: Haskell2010
+    build-depends:
+        base == 4.13.0.0
+    ghc-options:
+        -- Enable all warnings, then disable the specific ones we don't want
+        -- Courtesy of: https://medium.com/mercury-bank/enable-all-the-warnings-a0517bc081c3
+        -Weverything
+        -Wno-missing-exported-signatures
+        -Wno-missing-import-lists
+        -Wno-missed-specialisations
+        -Wno-unsafe
+        -Wno-safe
+        -Wno-missing-local-signatures
+        -Wno-monomorphism-restriction
+    default-extensions:
+        LambdaCase
+        TupleSections
+
+library
+    import: common-options
+    exposed-modules:
+        Json
+        Lib
+    hs-source-dirs: src
+
+executable haskell-json-parser-exe
+    import: common-options
+    main-is: Main.hs
+    other-modules: Paths_haskell_json_parser
+    hs-source-dirs: app
+    build-depends: haskell-json-parser
+
+test-suite haskell-json-parser-test
+    import: common-options
+    type: exitcode-stdio-1.0
+    main-is: Spec.hs
+    other-modules: Paths_haskell_json_parser
+    hs-source-dirs: test
+    build-depends: haskell-json-parser
+
